@@ -56,12 +56,14 @@ const Profil = ({ user }) => {
         marginBottom: '0.5rem',
     };
 
+    const baseUrl = 'http://localhost:8000/storage/';
+
     return (
         <div style={containerStyle}>
             {/* En-tête du profil */}
             <div style={headerStyle}>
                 <img
-                    src={user.photo_profil || 'https://via.placeholder.com/120'}
+                    src={user.photo_profil ? `${baseUrl}${user.photo_profil}` : 'https://via.placeholder.com/120'}
                     alt="Photo de profil"
                     style={profileImageStyle}
                 />
@@ -77,8 +79,8 @@ const Profil = ({ user }) => {
             <p style={detailStyle}><strong>Téléphone :</strong> {user.telephone}</p>
             <p style={detailStyle}><strong>Adresse :</strong> {user.adresse || 'Non renseignée'}</p>
             <p style={detailStyle}><strong>Date de naissance :</strong> {user.date_naissance}</p>
-            <p style={detailStyle}><strong>Poids :</strong> {user.poids ? `${user.poids} kg` : 'Non renseigné'}</p>
-            <p style={detailStyle}><strong>Taille :</strong> {user.taille ? `${user.taille} cm` : 'Non renseignée'}</p>
+            <p style={detailStyle}><strong>Poids :</strong> {user.poids ? `${user.poids} kg` : '__'}</p>
+            <p style={detailStyle}><strong>Taille :</strong> {user.taille ? `${user.taille} cm` : '__'}</p>
 
             {/* Section biographie */}
             <h2 style={sectionTitleStyle}>Biographie</h2>

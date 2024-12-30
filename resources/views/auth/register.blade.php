@@ -69,7 +69,7 @@
         <!-- Date de naissance -->
         <div class="mt-4">
             <x-input-label for="date_naissance" :value="__('Date de naissance')" />
-            <x-text-input id="date_naissance" class="block mt-1 w-full" type="date" name="date_naissance" :value="old('date_naissance')" required />
+            <x-text-input id="date_naissance" class="block mt-1 w-full" type="date" name="date_naissance" :value="old('date_naissance')" required max="{{ now()->subYears(18)->format('Y-m-d') }}" />
             <x-input-error :messages="$errors->get('date_naissance')" class="mt-2" />
         </div>
 

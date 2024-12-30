@@ -309,12 +309,9 @@ Route::middleware(['auth'])->group(function () {
         return app(AbonnementsController::class)->tyabonnements();
     })->name('janvier.abonnement.index');
 
-    Route::post('/artisan/abonnements/{typeAbonnement}', function ($typeAbonnement) {
-        if (auth()->user()->role_id !== 2) {
-            return redirect('/');
-        }
-        return app(AbonnementsController::class)->subscribe($typeAbonnement);
-    })->name('janvier.abonnement.subscribe');
+    Route::post('/artisan/abonnements/{typeAbonnement}', [AbonnementsController::class, 'subscribe'])
+    ->whereNumber('typeAbonnement') // Valide que le paramètre est un entier (facultatif)
+    ->name('janvier.abonnement.subscribe');
 });
 
 

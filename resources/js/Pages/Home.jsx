@@ -129,6 +129,8 @@ const Home = () => {
         backgroundColor: '#9C1D39',
     };
 
+    const baseUrl = 'http://localhost:8000/storage/';
+
     return (
         <div style={homeStyle}>
             {/* Section Carrousel */}
@@ -152,7 +154,8 @@ const Home = () => {
             <section style={productGridStyle}>
                 {products.map((product) => (
                     <div key={product.id} style={productCardStyle}>
-                        <img src={product.image} alt={product.name} style={productImageStyle} />
+                        <img 
+                        src={product.image ? `${baseUrl}${product.image}` : 'https://via.placeholder.com/120'} alt={product.name} style={productImageStyle} />
                         <h2 style={productTitleStyle}>{product.name}</h2>
                         <p style={productDescriptionStyle}>{product.description}</p>
                         <p style={productPriceStyle}>{product.price}€</p>
