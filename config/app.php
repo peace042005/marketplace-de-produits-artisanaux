@@ -159,7 +159,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
         /*
          * Application Service Providers...
          */
