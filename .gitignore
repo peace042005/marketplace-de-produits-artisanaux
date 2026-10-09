@@ -17,3 +17,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Historique local VS Code
+/.history
+
+# Base SQLite locale
+/database/database.sqlite
