@@ -77,17 +77,7 @@ class RegisteredUserController extends Controller
         // Connexion automatique de l'utilisateur
         Auth::login($user);
 
-
-        // Redirection selon le rôle
-        if ($user->role_id === 1) {
-            return redirect('/ventes/data'); // Rediriger vers le tableau de bord administrateur
-        } elseif ($user->role_id === 2) {
-            return redirect('/artisan/profil'); // Rediriger vers le tableau de bord artisan
-        } elseif ($user->role_id === 3) {
-            return redirect('/home'); // Rediriger vers le tableau de bord client
-        }
-
-        // Si aucun rôle spécifique, rediriger vers la page par défaut
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Redirection vers l'espace correspondant au rôle
+        return redirect(auth()->user()->homePath());
     }
 }

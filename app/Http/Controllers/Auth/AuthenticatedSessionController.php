@@ -29,20 +29,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Vérifier le rôle de l'utilisateur connecté
-        if (auth()->user()->role_id === 1) {
-            // Si le rôle est 1 (par exemple, administrateur)
-            return redirect('/ventes/data'); // Rediriger vers le tableau de bord administrateur
-        } elseif (auth()->user()->role_id === 2) {
-            // Si le rôle est 2 (par exemple, Artisan)
-            return redirect('/artisan/profil'); // Rediriger vers le tableau de bord artisan
-        } elseif (auth()->user()->role_id === 3) {
-            // Si le rôle est 3 (par exemple, Client)
-            return redirect('/home'); // Rediriger vers le tableau de bord client
-        }
-
-        // Si aucun rôle spécifique, rediriger vers la page par défaut
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Redirection vers l'espace correspondant au rôle
+        return redirect(auth()->user()->homePath());
     }
 
     /**

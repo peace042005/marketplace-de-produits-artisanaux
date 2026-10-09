@@ -85,6 +85,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
+        'role_id' => 'integer',
         'email_verified_at' => 'datetime',
     ];  
     /**
@@ -317,5 +318,19 @@ class User extends Authenticatable
     public function created_by()
     {
         return $this->belongsTo('App\Models\User', 'created_by');
+    }
+
+    /**
+     * Page d'accueil de l'utilisateur selon son rôle
+     * (1 = Administrateur, 2 = Artisan, 3 = Client).
+     */
+    public function homePath(): string
+    {
+        return match ((int) $this->role_id) {
+            1 => '/ventes/data',
+            2 => '/artisan/profil',
+            3 => '/home',
+            default => '/',
+        };
     }
 }
