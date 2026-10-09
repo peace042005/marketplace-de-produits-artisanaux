@@ -2,7 +2,7 @@
 
 Application web qui met en relation des **artisans** et des **clients** : les artisans publient leurs produits et suivent leurs commandes, les clients parcourent le catalogue et commandent, et un **administrateur** gère les formules d'abonnement des artisans.
 
-> **Démo en ligne :** _lien à ajouter après le déploiement_
+> **Démo en ligne :** https://marketart.onrender.com
 > L'hébergement gratuit met l'application en veille : le premier chargement peut prendre environ une minute.
 
 ## Comptes de démonstration
@@ -65,7 +65,7 @@ Rôles : `1` Administrateur, `2` Artisan, `3` Client. Après connexion, chaque u
 
 ## Installation en local
 
-Prérequis : PHP 8.3, Composer, Node.js 20+, MySQL (ou SQLite).
+Prérequis : PHP 8.3, Composer, Node.js 20+, MySQL/SQLite.
 
 ```bash
 git clone https://github.com/peace042005/marketplace-de-produits-artisanaux.git
@@ -87,18 +87,17 @@ php artisan serve              # dans un second terminal
 
 L'application est alors disponible sur http://localhost:8000.
 
-## Déploiement (Render, offre gratuite)
-
-Le dépôt contient un `Dockerfile` et un fichier `render.yaml` prêts à l'emploi.
-
-1. Créer un compte sur [render.com](https://render.com) avec son compte GitHub.
-2. **New → Blueprint**, puis choisir ce dépôt : Render lit `render.yaml` et crée le service.
-3. Attendre la fin du build, puis ouvrir l'URL fournie (`https://marketart-xxxx.onrender.com`).
-
-Au démarrage, le script `docker/start.sh` génère la clé de l'application, met en cache la configuration et recrée la base SQLite avec les données de démonstration.
-
 ## Équipe
 
-Projet réalisé en équipe dans le cadre de la formation.
+Projet initié en équipe dans le cadre de ma formation en Informatique de Gestion spécialité Analyse Informatique et Programmation(3ème année), puis repris et poursuivi seule.
+
+**Ma contribution :**
+- **Espace administrateur** : tableau de bord de l'évolution des abonnements,
+  suivi des abonnements des artisans, gestion des types d'abonnement (prix, durée)
+- **Espace artisan** : profil, gestion de l'inventaire (articles avec photo),
+  suivi des commandes reçues et changement de statut, souscription aux abonnements
+- **Évolutions et maintenance** : contrôle d'accès par rôle,
+  corrections de sécurité,
+  données de démonstration, conteneurisation Docker et mise en ligne sur Render
 
 - **Marcella Chanhoun** — [GitHub](https://github.com/peace042005)
