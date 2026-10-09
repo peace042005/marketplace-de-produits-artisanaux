@@ -1,0 +1,22 @@
+# Déploiement sur Render (offre gratuite) — voir README, section « Déploiement »
+services:
+  - type: web
+    name: marketart
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: APP_NAME
+        value: Market'Art
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: SESSION_DRIVER
+        value: file
+      - key: DEMO_RESET_ON_START
+        value: "true"
