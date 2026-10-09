@@ -134,21 +134,21 @@ const Home = () => {
         backgroundColor: '#9C1D39',
     };
 
-    const baseUrl = 'http://localhost:8000/storage/';
+    const baseUrl = '/storage/';
 
     return (
         <div style={homeStyle}>
             {/* Section Carrousel */}
             <section style={carouselStyle}>
-                <div style={{ ...carouselItemStyle, backgroundImage: 'url("https://th.bing.com/th/id/OIP.XJ5B0eNvm0-xPhV4fqpewQHaFP?rs=1&pid=ImgDetMain")' }}>
+                <div style={{ ...carouselItemStyle, backgroundImage: 'linear-gradient(135deg, #7B2D26 0%, #C46A2F 55%, #E9A23B 100%)' }}>
                     <div>Market'Art </div>
                     <div>Découvrez les produits des artisans locaux</div>
                 </div>
-                <div style={{ ...carouselItemStyle, backgroundImage: 'url("https://th.bing.com/th/id/OIP.QsPcxiNGl5gR-_sve8SFDwHaDt?rs=1&pid=ImgDetMain")' }}>
+                <div style={{ ...carouselItemStyle, backgroundImage: 'linear-gradient(135deg, #3D2C5E 0%, #7B2D26 60%, #C46A2F 100%)' }}>
                     <div>Market'Art</div>
                     <div>Un univers d'artisanat unique</div>
                 </div>
-                <div style={{ ...carouselItemStyle, backgroundImage: 'url("https://th.bing.com/th/id/R.c3ce173778fa1c10f6a61532bfecc3e1?rik=l%2f%2bBfvtkZJM4Qg&riu=http%3a%2f%2fwww.hermitagebespoke.com%2fgraphics%2fobjectsart%2fart-07.jpg&ehk=oy%2bkt8HhUTg7r54t5TRyU9OomGxog3sDTWUtqZgVwd8%3d&risl=&pid=ImgRaw&r=0")' }}>
+                <div style={{ ...carouselItemStyle, backgroundImage: 'linear-gradient(135deg, #24493D 0%, #4F7A3A 55%, #C9A227 100%)' }}>
                     <div>Market'Art</div>
                     <div>Un savoir-faire local à votre portée</div>
                 </div>
@@ -160,7 +160,7 @@ const Home = () => {
                 {products.map((product) => (
                     <div key={product.id} style={productCardStyle}>
                         <img 
-                        src={product.image ? `${baseUrl}${product.image}` : 'https://via.placeholder.com/120'} alt={product.name} style={productImageStyle} />
+                        src={product.image ? `${baseUrl}${product.image}` : 'https://placehold.co/120x120?text=Image'} alt={product.name} style={productImageStyle} />
                         <h2 style={productTitleStyle}>{product.name}</h2>
                         <p style={productDescriptionStyle}>{product.description}</p>
                         <p style={productPriceStyle}>{product.price}€</p>

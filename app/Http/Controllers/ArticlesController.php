@@ -14,8 +14,11 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->get();
-       
+        // Uniquement les articles de l'artisan connecté
+        $articles = Article::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view("janvier/article.index", compact("articles"));
     }
 
@@ -70,41 +73,48 @@ class ArticlesController extends Controller
         return redirect()->route('janvier.article.index')->with('success', 'Article créé avec succès.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $article = Article::find($id);
-        return view("janvier/article.show", compact("article"));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $article = Article::find($id);
-        return view("janvier/article.edit", compact("article"));
+        $article = $this->articleDeLArtisan($id);
+
+        return view('janvier/article.edit', compact('article'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        $article = Article::find($id);
-        $article->update($request->all());
+        $article = $this->articleDeLArtisan($id);
+
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'description' => 'required|string',
+            'prix' => 'required|numeric|min:0',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('article', 'public');
+        } else {
+            unset($validated['image']);
+        }
+
+        $article->update($validated);
+
+        return redirect()->route('janvier.article.index')->with('success', 'Article mis à jour avec succès.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $article = Article::find($id);
+        $article = $this->articleDeLArtisan($id);
         $article->delete();
 
         return redirect()->route('janvier.article.index')->with('status', 'Article supprimé avec succès');
+    }
+
+    /**
+     * Récupère un article en vérifiant qu'il appartient à l'artisan connecté.
+     */
+    private function articleDeLArtisan(string $id): Article
+    {
+        return Article::where('user_id', Auth::id())->findOrFail($id);
     }
 }

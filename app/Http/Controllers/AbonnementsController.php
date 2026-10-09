@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Abonnement;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Models\Type_abonnement;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +35,11 @@ class AbonnementsController extends Controller
      // Afficher tous les abonnements
      public function index()
     {
-         $abonnements = Abonnement::orderBy('created_at', 'desc');
+         // Abonnements de l'utilisateur connecté, du plus récent au plus ancien
+         $abonnements = Abonnement::with(['user', 'typeAbonnement'])
+             ->where('user_id', Auth::id())
+             ->orderBy('created_at', 'desc')
+             ->get();
          return view('janvier.abonnements.index', compact('abonnements'));
     }
  

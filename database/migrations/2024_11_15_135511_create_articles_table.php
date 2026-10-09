@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nom');
             $table->text('description');
             $table->double('prix');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->addDefaultColumns();
         });
     }

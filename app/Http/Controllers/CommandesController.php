@@ -17,7 +17,10 @@ class CommandesController extends Controller
 
     public function changerStatut($commandeId)
     {
-        $commande = Commande::find($commandeId); // Trouver la commande par ID
+        // La commande doit contenir au moins un article de l'artisan connecté
+        $commande = Commande::whereHas('details.article', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->find($commandeId);
 
         if (!$commande) {
             return response()->json([
@@ -103,27 +106,25 @@ class CommandesController extends Controller
             $validated = $request->validate([
                 'article_id' => 'required|exists:articles,id',
                 'quantite' => 'required|integer|min:1',
-                'total' => 'required|numeric|min:0',
             ]);
 
             // Récupérer l'utilisateur connecté
             $user = auth()->user();
 
+            // Le total est calculé côté serveur à partir du prix de l'article
+            $article = Article::findOrFail($validated['article_id']);
+
             // Créer la commande
             $commande = Commande::create([
                 'user_id' => $user->id,
-                'total' => $request->total,
+                'total' => $article->prix * $validated['quantite'],
             ]);
-
-            // Trouver l'article
-            $article = Article::find($request->article_id);
 
             // Ajouter le détail de la commande dans la table `details`
             Detail::create([
                 'commande_id' => $commande->id,
                 'article_id' => $article->id,
-                'quantite' => $request->quantite,
-                'prix' => $article->prix,
+                'quantite' => $validated['quantite'],
             ]);
 
             // Retourner la réponse avec la commande créée
@@ -132,6 +133,8 @@ class CommandesController extends Controller
                 'commande' => $commande,
             ], 201);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e;
         } catch (\Exception $e) {
             // Log l'exception pour déboguer
             Log::error('Erreur lors de la commande: ' . $e->getMessage());
@@ -139,7 +142,6 @@ class CommandesController extends Controller
             // Retourner l'erreur
             return response()->json([
                 'message' => 'Une erreur est survenue',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

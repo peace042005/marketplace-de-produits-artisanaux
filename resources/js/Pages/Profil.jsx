@@ -56,14 +56,14 @@ const Profil = ({ user }) => {
         marginBottom: '0.5rem',
     };
 
-    const baseUrl = 'http://localhost:8000/storage/';
+    const baseUrl = '/storage/';
 
     return (
         <div style={containerStyle}>
             {/* En-tête du profil */}
             <div style={headerStyle}>
                 <img
-                    src={user.photo_profil ? `${baseUrl}${user.photo_profil}` : 'https://via.placeholder.com/120'}
+                    src={user.photo_profil ? `${baseUrl}${user.photo_profil}` : 'https://placehold.co/120x120?text=Image'}
                     alt="Photo de profil"
                     style={profileImageStyle}
                 />
